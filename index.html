@@ -11,13 +11,11 @@
 </head>
 <body><main><img src="jim-gpt-launcher-icon.png" alt="Jim GPT Launcher"><h1>Jim GPT Launcher</h1><p class="provenance">Front door v1.0 · SEW target: resolve current release from the governed Locations Registry</p><p>This front door clears this browser's launcher state, then opens the current governed SEW endpoint. If the endpoint identity is not current, do not continue.</p><a id="open-launcher" href="https://script.google.com/macros/s/AKfycbyG9HNHUK7sG8MB-Y0XWZNsOU4_AxVyEB8q_yBH3Ji-OPqhKK48acgpOypX3owuHQ3O/exec?route=launcher">Open current launcher</a></main><script>
 const link=document.getElementById('open-launcher');
-link.addEventListener('click',async event=>{
+link.addEventListener('click',event=>{
   event.preventDefault();
-  try {
-    localStorage.clear(); sessionStorage.clear();
-    if ('serviceWorker' in navigator) await Promise.all((await navigator.serviceWorker.getRegistrations()).map(r=>r.unregister()));
-    if (window.caches) await Promise.all((await caches.keys()).map(k=>caches.delete(k)));
-  } finally { window.location.assign(link.href+'&frontDoor='+Date.now()); }
+  const target=link.href+'&frontDoor='+Date.now();
+  window.location.replace(target);
+  return;
 });
 </script></body>
 </html>
